@@ -16,7 +16,7 @@
                 <option value="1">Drapieżniki</option>
                 <option value="2">Roślinożerne</option>
                 <option value="3">Padlinożerne</option>
-                <option value='4'>Wszystkożerne</option>
+                <option value="4">Wszystkożerne</option>
             </select>
             <input type="submit" value="Zobacz">
         </form>
@@ -43,21 +43,21 @@
     <div id="srodek">
         <?php
 
-       if(isset($wybor))
+       if(!empty($wybor=$_POST['wybierz']))
        {
-        $wybor=$_POST['wybierz'];
+        
         $kw2="SELECT zwierzeta.id,zwierzeta.gatunek,zwierzeta.wystepowanie FROM zwierzeta,odzywianie WHERE zwierzeta.Odzywianie_id=odzywianie.id AND odzywianie.id=$wybor";
         $q2=mysqli_query($conn,$kw2);
-            $lista=mysqli_fetch_row($q2);
-            if($wybor=="1")
+            
+            if($wybor==1)
             {
                 $wybor="Drapiezniki";
             }
-            else if($wybor=='2')
+            else if($wybor==2)
             {
                 $wybor="Roślinożerne";
             }
-            else if($wybor=="3")
+            else if($wybor==3)
             {
                 $wybor="Padlinożerne";
             }
@@ -65,8 +65,11 @@
             {
                 $wybor="Wszystkożerne";
             }
-            echo
-            "$lista[0].$lista[1],$lista[2]";
+            while($lista=mysqli_fetch_row($q2))
+            {
+                echo "$lista[0].$lista[1].$lista[2]<br>";
+            }
+            
        }
         mysqli_close($conn);
         ?>
